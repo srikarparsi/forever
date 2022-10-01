@@ -5,23 +5,27 @@ import {firestore} from './firebase';
 import db from './firebase';
 import PeopleSelection from './PeopleSelection';
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Redirect
+} from "react-router-dom";
+import First from './first';
+import Second from './second';
+import Third from './third';
+
 function App() {
   
-  const submit = (e) => {
-    e.preventDefault();
-    db.collection("customersData").add({
-      name: "some name",
-      password: "password",
-    });
-  };
-  
   return (
-    <div className="App">
-      <PeopleSelection />
-      <div className="App__form">
-        <button onClick={submit}>Submit</button>
-      </div>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={First} />
+        <Route path="/second" component={Second}/>
+        <Route path="/third" component={Third}/>
+      </Switch>
+    </Router>
   );
 }
 
