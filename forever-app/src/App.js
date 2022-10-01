@@ -3,6 +3,7 @@ import './App.css';
 import {firestore} from './firebase';
 
 import db from './firebase';
+import PeopleSelection from './PeopleSelection';
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
   
   return (
     <div className="App">
+      <PeopleSelection />
       <div className="App__form">
         <button onClick={submit}>Submit</button>
       </div>
