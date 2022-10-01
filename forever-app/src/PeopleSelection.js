@@ -1,14 +1,18 @@
 import React from 'react';
+import {useState} from "react"
 const PeopleSelection = () => {
-  
-    function sayHello() {
-      alert('Hello, World!');
+    const [file, setFile] = useState("");
+
+    function handleChange(event) {
+        setFile(event.target.files[0]);
     }
-    
     return (
+        
       <div className='PeopleSelection'>
           <h1> who do you want to remember! </h1>
-          <button onClick={sayHello}>upload photos</button>
+          <div>
+          <input type="file" accept="image/*" onChange={handleChange}/>
+          </div>
       </div>
     );
   };

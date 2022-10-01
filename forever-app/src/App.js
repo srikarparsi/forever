@@ -4,6 +4,7 @@ import {firestore} from './firebase';
 
 import db from './firebase';
 import PeopleSelection from './PeopleSelection';
+import MemorySelection from './MemorySelection';
 
 function App() {
   
