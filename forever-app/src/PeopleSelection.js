@@ -4,12 +4,14 @@ import S3FileUpload from 'react-s3';
  
 //Optional Import
 import { uploadFile } from 'react-s3';
+window.Buffer = window.Buffer || require("buffer").Buffer; 
  
 const PeopleSelection = () => {
+    const axios = require('axios').default;
     const [file, setFile] = useState("");
-    const config = {
-      bucketName: 'myBucket', dirName: 'photos', region: 'eu-west-1', accessKeyId: 'AKIAVKXSYGKYRNJB6GZC', secretAccessKey: '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',
-    }
+    // const config = {
+    //   bucketName: 'forever-videos', dirName: 'photos', region: 'us-east-1', accessKeyId: 'AKIAVKXSYGKYRNJB6GZC', secretAccessKey: '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',
+    // }
 
      function handleChange(event) {
          setFile(event.target.files[0]);
@@ -19,8 +21,10 @@ const PeopleSelection = () => {
       if (!file) {
           alert("Please choose a file first!")
       }
-      S3FileUpload.uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
-      uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
+      const { response } = axios.post("https://forever.ngrok.io/upload-photo", {file: file}).then(response => console.log("server response: ", response))
+
+      // S3FileUpload.uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
+      // uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
      }
     
     return (
@@ -30,7 +34,10 @@ const PeopleSelection = () => {
               <input type="file" accept="image/*" onChange={handleChange}/>
            </div>
            <div>
-            <button onclick={console.log("pressed")}>next</button>
+            <button onClick={handleUpload}>upload</button>
+           </div>
+           <div>
+            <button onClick={console.log("pressed")}>next</button>
            </div>
 
       </div>
