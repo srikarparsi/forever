@@ -32,6 +32,16 @@
   text-align: center;
 }
 
+.VidCard {
+  height: 189px;
+  width: 336px;
+  margin-left: 25px;
+}
+
+/* .TagView {
+  margin-bottom:20px;
+} */
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
