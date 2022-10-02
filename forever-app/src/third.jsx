@@ -11,45 +11,50 @@ const Third = () => {
     const [personList, setPersonList] = useState([{"url":"", "key":""}]);
     const [foodList, setFoodList] = useState([{"url":"", "key":""}]);
 
+    function filterUndefined(item) {
+        return item.url !== undefined;
+    }
+
     useEffect(() => {
         getFavorites().then((response) => {
             let newList = response.docs.map(doc => doc.data());
+            newList = newList.filter(filterUndefined);
             newList.map((item => {
                 item.url = item.url + "?start=" + item.start;
             }));
             setFavoritesList(newList);
-            console.log(favoritesList);
+            console.log(newList);
         }).catch((e) => {
             alert("Error occured while fetching your favorites. " + e);
         });
     
         getPerson().then((response) => {
             let newList = response.docs.map(doc => doc.data());
+            newList = newList.filter(filterUndefined);
             newList.map((item => {
                 item.url = item.url + "?start=" + item.start;
             }));
             setPersonList(newList);
-            console.log(personList);
         }).catch((e) => {
             alert("Error occured while fetching your favorites. " + e);
         });
     
         getFood().then((response) => {
             let newList = response.docs.map(doc => doc.data());
+            newList = newList.filter(filterUndefined);
             newList.map((item => {
                 item.url = item.url + "?start=" + item.start;
             }));
             setFoodList(newList);
-            console.log(foodList);
         }).catch((e) => {
             alert("Error occured while fetching your favorites. " + e);
         });
       }, []);
 
-    return <div>
-        <TagView list={favoritesList} name="Favorites"/>
-        <TagView list={personList} name="Person"/>
-        <TagView list={foodList} name="Food"/>;
+    return <div className="CustomBody">
+        <TagView list={favoritesList} name="favorites"/>
+        <TagView list={personList} name="person"/>
+        <TagView list={foodList} name="food"/>;
     </div>;
     
 };

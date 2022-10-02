@@ -1,9 +1,11 @@
 import React from 'react';
 import {useState} from "react"
 import S3FileUpload from 'react-s3';
+import "typeface-montserrat"
  
 //Optional Import
 import { uploadFile } from 'react-s3';
+import { Link } from 'react-router-dom';
 window.Buffer = window.Buffer || require("buffer").Buffer; 
  
 const PeopleSelection = () => {
@@ -28,18 +30,24 @@ const PeopleSelection = () => {
      }
     
     return (
-      <div className='PeopleSelection'>
-          <h1> who do you want to remember! </h1>
-            <div>
-              <input type="file" accept="image/*" onChange={handleChange}/>
-           </div>
-           <div>
-            <button onClick={handleUpload}>upload</button>
-           </div>
-           <div>
-            <button onClick={console.log("pressed")}>next</button>
-           </div>
-
+      <div className='CustomBody'>
+          <h1 style={{fontFamily: "Montserrat", marginTop:"200px", color:"white"}}> who do you want to remember! </h1>
+          
+          <div class='parent'>
+            <div class='child'>
+              <div>
+                <input className="button-purple" type="file" accept="image/*" onChange={handleChange}/>
+              </div>
+            </div>
+            <div class='child'>
+              <div>
+                <button className="button-purple" onClick={handleUpload}>upload</button>
+              </div>
+            </div>
+          </div>
+          <div className="button-grey">
+            <Link to="/second">Next</Link>
+          </div>
       </div>
     );
   };

@@ -10,9 +10,9 @@ export function TagView (props) {
         </h1>
         <ScrollMenu>
             {props.list.map((element) => (
-                <div className='VidCard' key={element.key}>
+                element.url ? <div className='VidCard' key={element.key}>
                     <iframe width="336" height="189" src={element.url} title="YouTube video player" padding="50" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                </div>    
+                </div> : <div>Something</div> 
             ))}
         </ScrollMenu>
         </div>
