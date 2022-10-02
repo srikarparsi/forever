@@ -13,19 +13,52 @@ const PeopleSelection = () => {
     //   bucketName: 'forever-videos', dirName: 'photos', region: 'us-east-1', accessKeyId: 'AKIAVKXSYGKYRNJB6GZC', secretAccessKey: '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',
     // }
 
-     function handleChange(event) {
+    function handleChange(event) {
          setFile(event.target.files[0]);
-     }
+    }
+
+    const convertToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      });
+    };
 
      function handleUpload() {
       if (!file) {
           alert("Please choose a file first!")
       }
-      const { response } = axios.post("https://forever.ngrok.io/upload-photo", {file: file}).then(response => console.log("server response: ", response))
 
-      // S3FileUpload.uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
+      
+      //const data = new FormData();
+      // data.append('file', file)
+      // data.append('filename', file.filename)
+      const base64 = convertToBase64(file).then(result => 
+        {
+          console.log(result)
+      // console.log(base64);
+        const data = JSON.stringify({"imageUrl": result, "name": "James"});
+
+      // setPostImage({ ...postImage, myFile: base64 });
+      console.log("dataL ", data)
+      const response = axios.post('https://forever.ngrok.io/upload-photo', data, 
+        {headers: {
+            // 'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
+          }}
+          ).then(response => console.log("response: ", response))
+      //const { response } = axios.post("https://forever.ngrok.io/upload-photo", {file: file}).then(response => console.log("server response: ", response))
+
+      //S3FileUpload.uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
       // uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
-     }
+    });
+    }
     
     return (
       <div className='PeopleSelection'>
