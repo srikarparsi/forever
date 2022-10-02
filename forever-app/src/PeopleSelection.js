@@ -13,15 +13,27 @@ const PeopleSelection = () => {
     //   bucketName: 'forever-videos', dirName: 'photos', region: 'us-east-1', accessKeyId: 'AKIAVKXSYGKYRNJB6GZC', secretAccessKey: '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',
     // }
 
-     function handleChange(event) {
+    function handleChange(event) {
          setFile(event.target.files[0]);
-     }
+    }
 
      function handleUpload() {
       if (!file) {
           alert("Please choose a file first!")
       }
-      const { response } = axios.post("https://forever.ngrok.io/upload-photo", {file: file}).then(response => console.log("server response: ", response))
+
+      // const data = JSON.stringify({"testkey": "testvalue"})
+      const data = new FormData();
+      data.append('file', file)
+      data.append('filename', file.filename)
+
+      const response = axios.post('https://forever.ngrok.io/upload', data, 
+        {headers: {
+            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'application/json',
+          }}
+          ).then(response => console.log("response: ", response))
+      //const { response } = axios.post("https://forever.ngrok.io/upload-photo", {file: file}).then(response => console.log("server response: ", response))
 
       // S3FileUpload.uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
       // uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
