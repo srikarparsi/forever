@@ -2,7 +2,8 @@ import React from 'react';
 import {useState} from "react"
 import S3FileUpload from 'react-s3';
 import "typeface-montserrat"
- 
+import db from './firebase.js'
+import { arrayUnion } from 'firebase/firestore';
 //Optional Import
 import { uploadFile } from 'react-s3';
 import { Link } from 'react-router-dom';
@@ -47,6 +48,16 @@ const PeopleSelection = () => {
       // console.log(base64);
         const data = JSON.stringify({"imageUrl": result, "name": name});
 
+      db.collection("allTags").doc("tagList").update({
+          people: arrayUnion({"name": name, "imageUrl": result}),
+      })
+
+      .then(function() {
+          console.log("Document successfully written");
+      })
+      .catch(function(error) {
+          console.error("Error writing document: ", error);
+      });
       // setPostImage({ ...postImage, myFile: base64 });
       console.log(data);
       const response = axios.post('https://forever.ngrok.io/upload-photo', data, 
@@ -70,7 +81,7 @@ const PeopleSelection = () => {
     
     return (
       <div className='CustomBody'>
-          <h1 style={{fontFamily: "Montserrat", marginTop:"200px", color:"white"}}> who do you want to remember! </h1>
+          <h1 style={{fontFamily: "Montserrat", marginTop:"200px", marginBottom:"75px", color:"white"}}> who do you want to remember </h1>
           <div className='button-purple' style={{margin:"0px 510px"}}>
           <label>
             Name:

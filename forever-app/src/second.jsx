@@ -9,10 +9,12 @@ import { collection, addDoc } from "firebase/firestore";
 //Functional Component 
 
 const options = [
-    'food', 'nature', 'family'
+    'food', 'technology', 'family'
   ];
 
 const Second = () => {
+
+  const axios = require('axios').default;
 
     let curr = "";
 
@@ -35,6 +37,16 @@ const Second = () => {
           });
     }
 
+    function sendToServer() {
+      const data = JSON.stringify({"faces": "alice,anhphu", "tags": "technology"});
+      const response = axios.post('https://forever.ngrok.io/batch-process', data, 
+        {headers: {
+            // 'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
+          }}
+          ).then(response => console.log("response: ", response))
+    }
+
   return (
     <div className="CustomBody">
         <h1 style={{textAlign:"center", fontFamily:"Montserrat", marginTop:"200px", color:"white"}}>
@@ -52,8 +64,8 @@ const Second = () => {
                  </div>
             </div>
           </div>
-
-          <div className="button-grey" style={{marginTop:"80px"}}>
+          <button className="button-purple" onClick={sendToServer} style={{margin:"20px 550px"}}>send to server</button>
+          <div className="button-grey" style={{marginTop:"60px"}}>
                     <Link to="/third">Next</Link>
                 </div>
     </div>
