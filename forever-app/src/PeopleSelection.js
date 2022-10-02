@@ -45,10 +45,10 @@ const PeopleSelection = () => {
         {
           console.log(result)
       // console.log(base64);
-        const data = JSON.stringify({"imageUrl": result, "name": "James"});
+        const data = JSON.stringify({"imageUrl": result, "name": name});
 
       // setPostImage({ ...postImage, myFile: base64 });
-      console.log("dataL ", data)
+      console.log(data);
       const response = axios.post('https://forever.ngrok.io/upload-photo', data, 
         {headers: {
             // 'Content-Type': 'multipart/form-data',
@@ -61,18 +61,30 @@ const PeopleSelection = () => {
       // uploadFile(file, config).then(data => console.log(data)).catch(err => console.error(err));
     });
     }
+
+    let name = "";
+
+    function changeName(value) {
+      name = value.name;
+    }
     
     return (
       <div className='CustomBody'>
           <h1 style={{fontFamily: "Montserrat", marginTop:"200px", color:"white"}}> who do you want to remember! </h1>
+          <div className='button-purple' style={{margin:"0px 510px"}}>
+          <label>
+            Name:
+            <input type="text" name="name" onChange={changeName}/>
+          </label>
+          </div>
           
-          <div class='parent'>
-            <div class='child'>
+          <div className='parent'>
+            <div className='child'>
               <div>
                 <input className="button-purple" type="file" accept="image/*" onChange={handleChange}/>
               </div>
             </div>
-            <div class='child'>
+            <div className='child'>
               <div>
                 <button className="button-purple" onClick={handleUpload}>upload</button>
               </div>
