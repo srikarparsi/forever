@@ -5,18 +5,20 @@ import 'react-dropdown/style.css';
 //Functional Component 
 
 const options = [
-    'one', 'two', 'three'
+    'food', 'nature', 'family'
   ];
   const defaultOption = options[0];
 
 const Second = () => {
   return (
     <div>
-        <h1>
-            Second Screen
-        </h1>
+        <h2 style={{textAlign:"center"}}>
+            what do you want to remember
+        </h2>
+        <div style={{backgroundColor: "thistle", margin: "50px"}}>
+          <Dropdown options={options} onChange={console.log("pressed")} value={defaultOption} placeholder="Select an option" />
+        </div>
         <Link to="/third">Show List of Users</Link>
-        <Dropdown options={options} onChange={console.log("pressed")} value={defaultOption} placeholder="Select an option" />
     </div>
     
   );
